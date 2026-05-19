@@ -21,11 +21,24 @@ if [[ -f "$PID_FILE" ]]; then
   fi
 fi
 
-"$NODE_BIN" "$ROOT_DIR/dist/index.js" >> "$STDOUT_LOG" 2>> "$STDERR_LOG" &
+EXIT_ON_QR=1 "$NODE_BIN" "$ROOT_DIR/dist/index.js" >> "$STDOUT_LOG" 2>> "$STDERR_LOG" &
 child_pid=$!
 echo "$child_pid" > "$PID_FILE"
 
+(
+  sleep "$RUN_SECONDS"
+  if kill -0 "$child_pid" 2>/dev/null; then
+    echo "$(date '+%F %T') yatm reached scheduled timeout, stopping pid $child_pid" >> "$STDOUT_LOG"
+    kill "$child_pid" 2>/dev/null || true
+  fi
+) &
+timeout_pid=$!
+
 cleanup() {
+  if [[ -n "${timeout_pid:-}" ]] && kill -0 "$timeout_pid" 2>/dev/null; then
+    kill "$timeout_pid" 2>/dev/null || true
+    wait "$timeout_pid" 2>/dev/null || true
+  fi
   if kill -0 "$child_pid" 2>/dev/null; then
     kill "$child_pid" 2>/dev/null || true
     wait "$child_pid" 2>/dev/null || true
@@ -35,4 +48,4 @@ cleanup() {
 
 trap cleanup EXIT INT TERM
 
-sleep "$RUN_SECONDS"
+wait "$child_pid" 2>/dev/null || true

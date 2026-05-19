@@ -27,7 +27,7 @@ exports.sleep = (ms) => new Promise((reslove) => {
     setTimeout(reslove, ms);
 });
 exports.extractOpenId = (str) => str.length === 32 ? str : str.match('openid=(.*?)(?=&|$)')?.[1];
-exports.sendNotificaition = (message) => node_notifier_1.notify({ message, title: 'yatm' });
+exports.sendNotificaition = (message, title = 'yatm', sound = false) => node_notifier_1.notify({ message, title, sound });
 exports.urlParamsToObject = (urlParams) => Object.fromEntries(new URLSearchParams(urlParams));
 // verbose
 exports.debugLogger = (...args) => consts_1.config.verbose && console.debug(...args);

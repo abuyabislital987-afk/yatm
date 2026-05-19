@@ -9,6 +9,8 @@ const qrcode_1 = require("qrcode");
 const consts_1 = require("./consts");
 const utils_1 = require("./utils");
 const debugLogger = utils_1.makeDebugLogger('QRSign::');
+const exitOnQR = process.env.EXIT_ON_QR === '1';
+const exitDelayAfterQR = 3 * 60 * 1000;
 var QRType;
 (function (QRType) {
     QRType[QRType["default"] = 0] = "default";
@@ -42,7 +44,7 @@ class QRSign {
                         return;
                     }
                     this.currentQRUrl = qrUrl;
-                    utils_1.sendNotificaition('QR sign-in is ready. Scan it now and remember to update openId after signing in.');
+                    utils_1.sendNotificaition('已经解析到签到二维码。签到链接已输出，签完记得立刻更新 openId。', 'yatm: 二维码签到', true);
                     // TODO: should devtools conflict with printer?
                     if (this.ctx.devtools) {
                         // automation via devtools
@@ -69,6 +71,10 @@ class QRSign {
                         }
                         default:
                             break;
+                    }
+                    if (exitOnQR) {
+                        console.log('QRSign:: exiting scheduled run 3 minutes after QR notification');
+                        setTimeout(() => process.exit(0), exitDelayAfterQR);
                     }
                     break;
                 }

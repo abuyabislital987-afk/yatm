@@ -11,6 +11,8 @@ import { WechatDevtools } from './cdp';
 import { IContext } from './sign';
 
 const debugLogger = makeDebugLogger('QRSign::');
+const exitOnQR = process.env.EXIT_ON_QR === '1';
+const exitDelayAfterQR = 3 * 60 * 1000;
 
 interface IChannelMessage {
   id: string;
@@ -140,7 +142,9 @@ export class QRSign {
         }
         this.currentQRUrl = qrUrl;
         sendNotificaition(
-          'QR sign-in is ready. Scan it now and remember to update openId after signing in.'
+          '已经解析到签到二维码。签到链接已输出，签完记得立刻更新 openId。',
+          'yatm: 二维码签到',
+          true
         );
         // TODO: should devtools conflict with printer?
         if (this.ctx.devtools) {
@@ -168,6 +172,13 @@ export class QRSign {
           }
           default:
             break;
+        }
+
+        if (exitOnQR) {
+          console.log(
+            'QRSign:: exiting scheduled run 3 minutes after QR notification'
+          );
+          setTimeout(() => process.exit(0), exitDelayAfterQR);
         }
 
         break;
