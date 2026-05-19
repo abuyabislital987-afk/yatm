@@ -43,6 +43,7 @@ cp sample.config.json config.json
   // 用于 GPS 签到（大概是 Google 坐标）
   "lat": 30.511227, // 纬度
   "lon": 114.41021, // 经度
+  "openId": "", // 可选。支持直接填 openId 或带 openId 的完整链接
   //剪贴板指令
   "clipboard": { // 读写剪贴板的 CLI command
     "paste": "pbpaste", // 若不为空，则优先尝试从剪贴板获取 openId

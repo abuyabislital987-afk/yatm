@@ -101,7 +101,7 @@ camelcase@^5.0.0:
 
 chrome-remote-interface@^0.30.0:
   version "0.30.0"
-  resolved "https://registry.npm.taobao.org/chrome-remote-interface/download/chrome-remote-interface-0.30.0.tgz#b9367142b362668ca7c84d642318053ac6f51495"
+  resolved "https://registry.npmjs.org/chrome-remote-interface/-/chrome-remote-interface-0.30.0.tgz#b9367142b362668ca7c84d642318053ac6f51495"
   integrity sha1-uTZxQrNiZoynyE1kIxgFOsb1FJU=
   dependencies:
     commander "2.11.x"
@@ -137,7 +137,7 @@ combined-stream@^1.0.8:
 
 commander@2.11.x:
   version "2.11.0"
-  resolved "https://registry.npm.taobao.org/commander/download/commander-2.11.0.tgz?cache=0&sync_timestamp=1616364041287&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fcommander%2Fdownload%2Fcommander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
+  resolved "https://registry.npmjs.org/commander/-/commander-2.11.0.tgz#157152fd1e7a6c8d98a5b715cf376df928004563"
   integrity sha1-FXFS/R56bI2YpbcVzzdt+SgARWM=
 
 decamelize@^1.2.0:
@@ -376,7 +376,7 @@ wrap-ansi@^5.1.0:
 
 ws@^7.2.0:
   version "7.4.5"
-  resolved "https://registry.npm.taobao.org/ws/download/ws-7.4.5.tgz#a484dd851e9beb6fdb420027e3885e8ce48986c1"
+  resolved "https://registry.npmjs.org/ws/-/ws-7.4.5.tgz#a484dd851e9beb6fdb420027e3885e8ce48986c1"
   integrity sha1-pITdhR6b62/bQgAn44hejOSJhsE=
 
 ws@^7.4.0:

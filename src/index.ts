@@ -15,7 +15,14 @@ const getOpenId = async ({ devtools, openIdSet }: IContext) => {
   let openId: string | undefined;
   if (devtools) {
     openId = await devtools.generateOpenId();
-  } else if (config.clipboard?.paste) {
+  } else {
+    const configuredOpenId = extractOpenId(env.OPEN_ID ?? config.openId ?? '');
+    if (configuredOpenId && !openIdSet.has(configuredOpenId)) {
+      openIdSet.add(configuredOpenId);
+      openId = configuredOpenId;
+    }
+  }
+  if (!openId && config.clipboard?.paste) {
     while (true) {
       openId = extractOpenId(pasteFromClipBoard());
       if (openId) {
@@ -27,7 +34,7 @@ const getOpenId = async ({ devtools, openIdSet }: IContext) => {
       }
       await sleep(config.wait);
     }
-  } else {
+  } else if (!openId) {
     openId = extractOpenId(
       env.OPEN_ID ?? question('Paste openId or URL here: ')
     );

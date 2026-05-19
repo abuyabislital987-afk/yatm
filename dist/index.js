@@ -12,7 +12,14 @@ const getOpenId = async ({ devtools, openIdSet }) => {
     if (devtools) {
         openId = await devtools.generateOpenId();
     }
-    else if (consts_1.config.clipboard?.paste) {
+    else {
+        const configuredOpenId = utils_1.extractOpenId(process_1.env.OPEN_ID ?? consts_1.config.openId ?? '');
+        if (configuredOpenId && !openIdSet.has(configuredOpenId)) {
+            openIdSet.add(configuredOpenId);
+            openId = configuredOpenId;
+        }
+    }
+    if (!openId && consts_1.config.clipboard?.paste) {
         while (true) {
             openId = utils_1.extractOpenId(utils_1.pasteFromClipBoard());
             if (openId) {
@@ -25,7 +32,7 @@ const getOpenId = async ({ devtools, openIdSet }) => {
             await utils_1.sleep(consts_1.config.wait);
         }
     }
-    else {
+    else if (!openId) {
         openId = utils_1.extractOpenId(process_1.env.OPEN_ID ?? readline_sync_1.question('Paste openId or URL here: '));
     }
     if (!openId) {

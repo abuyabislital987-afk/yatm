@@ -42,6 +42,7 @@ class QRSign {
                         return;
                     }
                     this.currentQRUrl = qrUrl;
+                    utils_1.sendNotificaition('QR sign-in is ready. Scan it now and remember to update openId after signing in.');
                     // TODO: should devtools conflict with printer?
                     if (this.ctx.devtools) {
                         // automation via devtools

@@ -6,6 +6,7 @@ interface IConfig {
   wait: number; // ms
   lat: number;
   lon: number;
+  openId?: string;
   ua?: string;
   clipboard?: {
     paste: string;
